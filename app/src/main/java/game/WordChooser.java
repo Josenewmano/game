@@ -2,7 +2,7 @@ package game;
 import java.util.Random;
 
 
-public class WordChoser {
+public class WordChooser {
   public static final String[] DICTIONARY = {"MAKERS", "CANDIES", "DEVELOPER", "LONDON"}; 
 
 
