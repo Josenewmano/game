@@ -3,12 +3,35 @@
  */
 package game;
 
+import java.util.Scanner;
+
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        WordChooser chooser = new WordChooser();
+        Game game = new Game(chooser);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome! Today the word to guess is:");
+        System.out.println(game.getWordToGuess());
+
+
+        do {
+            System.out.printf("Enter one letter to guess (%d attempts remaining):\n", game.getRemainingAttempts());
+            String input = scanner.nextLine();
+            if (game.guessLetter(input.charAt(0))){
+                System.out.println("Right!");
+            } else {
+                System.out.println("Wrong!");
+            }
+            System.out.println(game.getWordToGuess());
+        } while (game.getWordToGuess().indexOf('_') != -1 && game.getRemainingAttempts() != 0);
+         
+        scanner.close();
+        
+          
     }
 }

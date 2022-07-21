@@ -36,4 +36,12 @@ public class GameTest {
     game.guessLetter('M');
     assertEquals(game.getRemainingAttempts(), Integer.valueOf(10));
   }
+
+  @Test public void getWordToGuessAfterGuessLetterCorrect() {
+    WordChooser mockedChooser = mock(WordChooser.class);
+    when(mockedChooser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+    Game game = new Game(mockedChooser);
+    game.guessLetter('A');
+    assertEquals(game.getWordToGuess(), "MA____");
+  }
 }
