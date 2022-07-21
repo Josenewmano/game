@@ -2,30 +2,21 @@ package game;
 
 import java.util.ArrayList;
 
+
 public class Game {
   String wordToGuess = "";
   Integer remainingAttempts = 10;
   ArrayList<Character> guessedLetters = new ArrayList<Character>();
+  Masker masker;
 
-  public Game(WordChooser wordChooser) {
+  public Game(WordChooser wordChooser, Masker masker) {
     wordToGuess = wordChooser.getRandomWordFromDictionary();
+    this.masker = masker;
   }
   
   public static void main(String[] args) {    
   }
 
-  public String getWordToGuess() {
-    StringBuilder builder = new StringBuilder();      
-    for (int i = 0; i < this.wordToGuess.length(); i++) {     
-      Character currentLetter = wordToGuess.charAt(i);
-      if (guessedLetters.indexOf(currentLetter) != -1 || i == 0) {
-          builder.append(currentLetter);
-      } else {
-          builder.append("_");
-      }
-    }
-    return builder.toString();
-  }
 
   public Integer getRemainingAttempts() {
     return remainingAttempts;
@@ -40,8 +31,25 @@ public class Game {
       return true;
     }
   }
-  
-  
+
+  public String getWordToGuess() {
+    return masker.getMaskedWord(this.wordToGuess, guessedLetters);
+  }
+
+  public Boolean isGameLost() {
+    return remainingAttempts == 0;
+  }
+
+  public Boolean isGameWon() {
+
+    for(int i = 1; i < this.wordToGuess.length(); i++) {
+      Character currentLetter = this.wordToGuess.charAt(i);
+      if (!guessedLetters.contains(currentLetter)) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
 

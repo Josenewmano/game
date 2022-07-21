@@ -7,19 +7,16 @@ import java.util.Scanner;
 
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
         WordChooser chooser = new WordChooser();
-        Game game = new Game(chooser);
+        Masker masker = new Masker();
+        Game game = new Game(chooser, masker);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome! Today the word to guess is:");
-        System.out.println(game.getWordToGuess());
-
-
+      
         do {
+            System.out.println(game.getWordToGuess());
             System.out.printf("Enter one letter to guess (%d attempts remaining):\n", game.getRemainingAttempts());
             String input = scanner.nextLine();
             if (game.guessLetter(input.charAt(0))){
@@ -27,11 +24,15 @@ public class App {
             } else {
                 System.out.println("Wrong!");
             }
-            System.out.println(game.getWordToGuess());
-        } while (game.getWordToGuess().indexOf('_') != -1 && game.getRemainingAttempts() != 0);
+        } while (!game.isGameWon() && !game.isGameLost());
+
+        if (game.isGameWon()) {
+          System.out.println("You have won!");
+        } else {
+          System.out.println("You have lost!");
+        }
          
         scanner.close();
-        
-          
+ 
     }
 }
